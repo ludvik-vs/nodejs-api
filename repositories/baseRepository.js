@@ -15,8 +15,8 @@ class BaseRepository {
     return this.dbContext.value();
   }
 
-  getOne(search) {
-    return this.dbContext.find(search).value();
+  getOne(id) {
+    return this.dbContext.find({id}).value();
   }
 
   create(data) {
@@ -32,7 +32,7 @@ class BaseRepository {
   }
 
   delete(id) {
-    return this.dbContext.remove({ id }).write();
+    return this.dbContext.remove(id).write();
   }
 }
 
