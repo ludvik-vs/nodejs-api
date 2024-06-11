@@ -4,12 +4,12 @@ import { responseMiddleware } from "../middlewares/response.middleware.js";
 
 const router = Router();
 
-router.post(
+router.post(  
   "/login",
   async (req, res, next) => {
     try {
-      const { username, password } = req.body;
-      const data = await authService.login(username, password);
+      const { email, password } = req.body;
+      const data = await authService.login(email, password);
       res.data = data;
     } catch (err) {
       res.err = err;

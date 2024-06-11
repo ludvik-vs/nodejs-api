@@ -15,8 +15,8 @@ class BaseRepository {
     return this.dbContext.value();
   }
 
-  getOne(id) {
-    return this.dbContext.find({id}).value();
+  getOne(search) {
+    return this.dbContext.find({ search }).value();
   }
 
   create(data) {

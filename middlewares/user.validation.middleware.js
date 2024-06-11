@@ -17,6 +17,11 @@ const createUserValid = async (req, res, next) => {
     return res.status(400).json({ error: true, message: "Id should not be present" });
   }
 
+  // Validate all fields required except id
+  if (!firstName || !lastName || !email || !phoneNumber || !password) {
+    return res.status(400).json({ error: true, message: "All fields are required except id" });
+  }
+
   // Validate no additional fields
   const allowedFields = Object.keys(USER);
   for (const key in req.body) {
@@ -41,13 +46,13 @@ const createUserValid = async (req, res, next) => {
   }
 
   // Check for unique email
-  const existingUserByEmail = await userService.getByEmail(email);
+  const existingUserByEmail = await userService.search(email);
   if (existingUserByEmail) {
     return res.status(400).json({ error: true, message: "Email is already in use" });
   }
 
   // Check for unique phone number
-  const existingUserByPhoneNumber = await userService.getByPhoneNumber(phoneNumber);
+  const existingUserByPhoneNumber = await userService.search(phoneNumber);
   if (existingUserByPhoneNumber) {
     return res.status(400).json({ error: true, message: "Phone number is already in use" });
   }
@@ -95,7 +100,7 @@ const updateUserValid = async (req, res, next) => {
 
   // Check for unique email
   if (email) {
-    const existingUserByEmail = await userService.getByEmail(email);
+    const existingUserByEmail = await userService.search(email);
     if (existingUserByEmail && existingUserByEmail.id !== req.params.id) {
       return res.status(400).json({ error: true, message: "Email is already in use" });
     }
@@ -103,7 +108,7 @@ const updateUserValid = async (req, res, next) => {
 
   // Check for unique phone number
   if (phoneNumber) {
-    const existingUserByPhoneNumber = await userService.getByPhoneNumber(phoneNumber);
+    const existingUserByPhoneNumber = await userService.search(phoneNumber);
     if (existingUserByPhoneNumber && existingUserByPhoneNumber.id !== req.params.id) {
       return res.status(400).json({ error: true, message: "Phone number is already in use" });
     }

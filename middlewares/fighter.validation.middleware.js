@@ -46,7 +46,7 @@ const createFighterValid = async (req, res, next) => {
   }
 
   // Check for unique name
-  const existingFighterByName = await fighterService.getByName(name);
+  const existingFighterByName = await fighterService.getOne(name);
   if (existingFighterByName) {
     return res.status(400).json({ error: true, message: "Name is already in use" });
   }
@@ -99,7 +99,7 @@ const updateFighterValid = async (req, res, next) => {
 
   // Check for unique name
   if (name) {
-    const existingFighterByName = await fighterService.getByName(name);
+    const existingFighterByName = await fighterService.getOne(name);
     if (existingFighterByName && existingFighterByName.id !== req.params.id) {
       return res.status(400).json({ error: true, message: "Name is already in use" });
     }
