@@ -27,6 +27,9 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const user = await userService.search(req.params.id);
+    if (!user) {
+      throw new Error("User not found");
+    }
     res.data = user;
   } catch (err) {
     res.err = err;
@@ -51,6 +54,9 @@ router.post("/", createUserValid, async (req, res, next) => {
 router.patch("/:id", updateUserValid, async (req, res, next) => {
   try {
     const user = await userService.update(req.params.id, req.body);
+    if (!user) {
+      throw new Error("User not found");
+    }
     res.data = user;
   } catch (err) {
     res.err = err;
@@ -63,6 +69,9 @@ router.patch("/:id", updateUserValid, async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     const user = await userService.delete(req.params.id);
+    if (!user) {
+      throw new Error("User not found");
+    }
     res.data = user;
   } catch (err) {
     res.err = err;

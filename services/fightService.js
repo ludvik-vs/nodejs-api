@@ -5,8 +5,8 @@ class FightersService {
     return fightRepository.getAll();
   }
 
-  async getById(id) {
-    return fightRepository.getById(id);
+  async getOne(id) {
+    return fightRepository.getOne(id);
   }
 
   async create(fightData) {
@@ -18,7 +18,12 @@ class FightersService {
   }
 
   async delete(id) {
-    return fightRepository.delete(id);
+    try{
+
+      return await fightRepository.delete(id);
+    } catch(error){
+      throw new Error('Error to delete fighter');
+    }
   }
 }
 

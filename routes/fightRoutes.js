@@ -5,6 +5,8 @@ import { createFighterValid, updateFighterValid } from "../middlewares/fighter.v
 
 const router = Router();
 
+// TODO: Implement route controllers for fighter
+
 // Get all combats
 router.get("/", async (req, res, next) => {
   try {
@@ -20,7 +22,7 @@ router.get("/", async (req, res, next) => {
 // Get combat by ID
 router.get("/:id", async (req, res, next) => {
   try {
-    const fight = await fightersService.getById(req.params.id);
+    const fight = await fightersService.getOne(req.params.id);
     res.data = fight;
   } catch (err) {
     res.err = err;

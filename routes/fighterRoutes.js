@@ -23,7 +23,10 @@ router.get("/", async (req, res, next) => {
 // Get fighter by ID
 router.get("/:id", async (req, res, next) => {
   try {
-    const fighter = await fighterService.getById(req.params.id);
+    const fighter = await fighterService.getOne(req.params.id);
+    if (!fighter) {
+      throw new Error("Fighter not found");
+    }
     res.data = fighter;
   } catch (err) {
     res.err = err;
@@ -48,6 +51,9 @@ router.post("/", createFighterValid, async (req, res, next) => {
 router.patch("/:id", updateFighterValid, async (req, res, next) => {
   try {
     const fighter = await fighterService.update(req.params.id, req.body);
+    if (!fighter) {
+      throw new Error("Fighter not found");
+    }
     res.data = fighter;
   } catch (err) {
     res.err = err;
@@ -60,6 +66,9 @@ router.patch("/:id", updateFighterValid, async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     const fighter = await fighterService.delete(req.params.id);
+    if (!fighter) {
+      throw new Error("Fighter not found");
+    }
     res.data = fighter;
   } catch (err) {
     res.err = err;
